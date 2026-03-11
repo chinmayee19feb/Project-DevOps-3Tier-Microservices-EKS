@@ -1,12 +1,10 @@
-var app = angular.module('catsvsdogs', []);
+var app = angular.module('cloudwars', []);
 
-// Decide which namespace to use, but always use the /result/socket.io path
-var namespace = '/'; // default namespace
+var namespace = '/';
 if (window.location.pathname.indexOf('/result') === 0) {
-  namespace = '/result';  // /result namespace
+  namespace = '/result';
 }
 
-// Connect using the chosen namespace, but ALWAYS path: '/result/socket.io'
 var socket = io(namespace, {
   path: '/result/socket.io',
   transports: ['websocket', 'polling']
@@ -18,6 +16,7 @@ var bg2 = document.getElementById('background-stats-2');
 app.controller('statsCtrl', function($scope) {
   $scope.aPercent = 50;
   $scope.bPercent = 50;
+  $scope.total = 0;
 
   var updateScores = function() {
     socket.on('scores', function (json) {
@@ -42,7 +41,6 @@ app.controller('statsCtrl', function($scope) {
     updateScores();
   };
 
-  // "message" is just an example event to signal readiness
   socket.on('message', function(data) {
     init();
   });

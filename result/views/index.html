@@ -1,41 +1,103 @@
 <!DOCTYPE html>
-<html ng-app="catsvsdogs">
+<html ng-app="cloudwars">
   <head>
     <meta charset="utf-8">
-    <title>Cats vs Dogs -- Result</title>
-    <base href="./">
-    <meta name = "viewport" content = "width=device-width, initial-scale = 1.0">
-    <meta name="keywords" content="docker-compose, docker, stack">
-    <meta name="author" content="Docker">
+    <title>⚡ CLOUD WARS — Live Results</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel='stylesheet' href='stylesheets/style.css' />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Rajdhani:wght@400;600;700&display=swap" rel="stylesheet">
   </head>
-  <body ng-controller="statsCtrl" >
-     <div id="background-stats">
-       <div id="background-stats-1">
-       </div><!--
-      --><div id="background-stats-2">
-      </div>
+  <body ng-controller="statsCtrl">
+
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        if(window.location.hostname === 'localhost') {
+          document.getElementById('vote-link').href = 'http://localhost:8080';
+        }
+      });
+    </script>
+    <!-- Background bars -->
+    <div id="background-stats">
+      <div id="background-stats-1"></div><!--
+   --><div id="background-stats-2"></div>
     </div>
+
+    <!-- Animated overlays -->
+    <div class="cyber-grid"></div>
+    <div class="scanline"></div>
+
+    <div class="particles">
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+      <div class="particle"></div>
+    </div>
+
     <div id="content-container">
       <div id="content-container-center">
-        <div id="choice">
-          <div class="choice cats">
-            <div class="label">🐱 Cats</div>
-            <div class="stat">{{aPercent | number:1}}%</div>
-          </div>
-          <div class="divider"></div>
-          <div class="choice dogs">
-            <div class="label">🐶 Dogs</div>
-            <div class="stat">{{bPercent | number:1}}%</div>
+
+        <div class="title-section">
+          <div class="glitch-text" data-text="LIVE RESULTS">LIVE RESULTS</div>
+          <div class="subtitle">CLOUD WARS — REAL-TIME DASHBOARD</div>
+          <div class="pulse-line"></div>
+          <div class="nav-actions">
+            <a href="https://ai-fairy-vote.duckdns.org" class="nav-action-btn nav-outlined" id="vote-link">VOTE</a>
+            <a href="/" class="nav-action-btn nav-primary">RESULT</a>
           </div>
         </div>
+
+        <div id="choice">
+          <div class="choice aws-choice">
+            <div class="choice-icon">☁️</div>
+            <div class="label">AWS</div>
+            <div class="stat">{{aPercent | number:1}}%</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill aws-fill" style="width: {{aPercent}}%"></div>
+            </div>
+          </div>
+
+          <div class="vs-badge">
+            <span>VS</span>
+          </div>
+
+          <div class="choice azure-choice">
+            <div class="choice-icon">🌩️</div>
+            <div class="label">Azure</div>
+            <div class="stat">{{bPercent | number:1}}%</div>
+            <div class="stat-bar">
+              <div class="stat-bar-fill azure-fill" style="width: {{bPercent}}%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Winner indicator -->
+        <div class="winner-section" ng-if="total > 0">
+          <div class="winner-badge" ng-if="aPercent > bPercent">
+            <span class="winner-icon">🏆</span>
+            <span class="winner-text">AWS LEADS</span>
+          </div>
+          <div class="winner-badge azure-winning" ng-if="bPercent > aPercent">
+            <span class="winner-icon">🏆</span>
+            <span class="winner-text">AZURE LEADS</span>
+          </div>
+          <div class="winner-badge tied" ng-if="aPercent == bPercent">
+            <span class="winner-icon">⚔️</span>
+            <span class="winner-text">TIED</span>
+          </div>
+        </div>
+
       </div>
     </div>
+
     <div id="result">
-      <span ng-if="total == 0">No votes yet</span>
-      <span ng-if="total == 1">{{total}} vote</span>
-      <span ng-if="total >= 2">{{total}} votes</span>
+      <span ng-if="total == 0">⏳ WAITING FOR VOTES...</span>
+      <span ng-if="total == 1">{{total}} VOTE CAST</span>
+      <span ng-if="total >= 2">{{total}} VOTES CAST</span>
     </div>
+
     <script src="socket.io.js"></script>
     <script src="angular.min.js"></script>
     <script src="app.js"></script>

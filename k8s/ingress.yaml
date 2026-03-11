@@ -14,13 +14,20 @@ metadata:
     nginx.ingress.kubernetes.io/websocket-services: "chinmayee-svc-result"
     nginx.ingress.kubernetes.io/proxy-set-header: "Upgrade $http_upgrade"
     nginx.ingress.kubernetes.io/proxy-set-header: "Connection $connection_upgrade"
+    cert-manager.io/cluster-issuer: "letsencrypt-prod"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
 
 spec:
+  tls:
+  - hosts:
+    - ai-fairy-vote.duckdns.org
+    - ai-fairy-result.duckdns.org
+    secretName: ai-fairy-tls
   #ingressClassName: "chinmayee-nginx"
   # ingressClassName: nginx
   ingressClassName: nginx-websocket
   rules:
-  - host: vote.app.chin.diogohack.shop
+  - host: ai-fairy-vote.duckdns.org
     http:
       paths:
       - path: /
@@ -30,7 +37,7 @@ spec:
             name: chinmayee-svc-vote
             port:
               number: 80
-  - host: result.app.chin.diogohack.shop
+  - host: ai-fairy-result.duckdns.org
     http:
       paths:
       - path: /result/socket.io
