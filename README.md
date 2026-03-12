@@ -16,7 +16,8 @@ The focus of this project is not just deployment, but understanding how Kubernet
 
 ## 🏗️ Architecture Diagram
 
-<img width="1561" height="685" alt="3-Tier App on Amazon EKS Cluster drawio" src="https://github.com/user-attachments/assets/429d3c6f-8bc4-42fc-8d65-f09a748a3120" />
+<img width="4893" height="2519" alt="3-Tier App on Amazon EKS Cluster drawio" src="https://github.com/user-attachments/assets/e850debb-646e-4581-99f6-fe276c9a2d20" />
+
 
 ### Application Components
 
